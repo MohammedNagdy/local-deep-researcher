@@ -1,0 +1,4 @@
+.env
+.langgraph_api
+ollama_deep_researcher.egg-info
+**/__pycache__

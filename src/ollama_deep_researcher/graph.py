@@ -119,6 +119,22 @@ def get_llm(configurable: Configuration):
                 temperature=0,
                 format="json",
             )
+    elif configurable.llm_provider == "groq":
+        if configurable.use_tool_calling:
+            return ChatLMStudio(
+                base_url=configurable.groq_base_url,
+                model=configurable.local_llm,
+                api_key=configurable.groq_api_key,
+                temperature=0,
+            )
+        else:
+            return ChatLMStudio(
+                base_url=configurable.groq_base_url,
+                model=configurable.local_llm,
+                api_key=configurable.groq_api_key,
+                temperature=0,
+                format="json",
+            )
     else:  # Default to Ollama
         if configurable.use_tool_calling:
             return ChatOllama(
@@ -304,6 +320,13 @@ def summarize_sources(state: SummaryState, config: RunnableConfig):
         llm = ChatLMStudio(
             base_url=configurable.lmstudio_base_url,
             model=configurable.local_llm,
+            temperature=0,
+        )
+    elif configurable.llm_provider == "groq":
+        llm = ChatLMStudio(
+            base_url=configurable.groq_base_url,
+            model=configurable.local_llm,
+            api_key=configurable.groq_api_key,
             temperature=0,
         )
     else:  # Default to Ollama

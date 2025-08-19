@@ -26,7 +26,7 @@ class Configuration(BaseModel):
         title="LLM Model Name",
         description="Name of the LLM model to use",
     )
-    llm_provider: Literal["ollama", "lmstudio"] = Field(
+    llm_provider: Literal["ollama", "lmstudio", "groq"] = Field(
         default="ollama",
         title="LLM Provider",
         description="Provider for the LLM (Ollama or LMStudio)",
@@ -49,6 +49,11 @@ class Configuration(BaseModel):
         title="LMStudio Base URL",
         description="Base URL for LMStudio OpenAI-compatible API",
     )
+    groq_base_url: str = Field(
+        default="https://api.groq.com/openai/v1/chat/completions",
+        title="Groq Base URL",
+        description="Base URL for Groq Open Source Models API",
+    )
     strip_thinking_tokens: bool = Field(
         default=True,
         title="Strip Thinking Tokens",
@@ -58,6 +63,11 @@ class Configuration(BaseModel):
         default=False,
         title="Use Tool Calling",
         description="Use tool calling instead of JSON mode for structured output",
+    )
+    groq_api_key: str = Field(
+        default="",
+        title="API Key Groq Open Source Models",
+        description="API Key Groq for Open Source Models",
     )
 
     @classmethod
