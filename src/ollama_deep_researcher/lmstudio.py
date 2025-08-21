@@ -72,8 +72,9 @@ class ChatLMStudio(ChatOpenAI):
         # If JSON format is requested, try to clean up the response
         if self.format == "json" and result.generations:
             try:
-                # Get the raw text
-                raw_text = result.generations[0][0].text
+                # Get the raw text (ChatResult.generations is a flat list of ChatGeneration)
+                generation = result.generations[0]
+                raw_text = getattr(generation, "text", None) or getattr(generation.message, "content", "")
                 logger.info(f"Raw model response: {raw_text}")
 
                 # Try to find JSON in the response
@@ -86,8 +87,11 @@ class ChatLMStudio(ChatOpenAI):
                     # Validate it's proper JSON
                     json.loads(json_text)
                     logger.info(f"Cleaned JSON: {json_text}")
-                    # Update the generation with the cleaned JSON
-                    result.generations[0][0].text = json_text
+                    # Update the generation with the cleaned JSON in both text and message content
+                    if hasattr(generation, "text"):
+                        generation.text = json_text
+                    if hasattr(generation, "message") and hasattr(generation.message, "content"):
+                        generation.message.content = json_text
                 else:
                     logger.warning("Could not find JSON in response")
             except Exception as e:

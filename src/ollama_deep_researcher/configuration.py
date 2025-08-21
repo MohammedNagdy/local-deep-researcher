@@ -50,7 +50,7 @@ class Configuration(BaseModel):
         description="Base URL for LMStudio OpenAI-compatible API",
     )
     groq_base_url: str = Field(
-        default="https://api.groq.com/openai/v1/chat/completions",
+        default="https://api.groq.com/openai/v1",
         title="Groq Base URL",
         description="Base URL for Groq Open Source Models API",
     )
