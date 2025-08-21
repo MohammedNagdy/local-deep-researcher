@@ -17,17 +17,6 @@ def run_research(
 
     Parameters:
         topic: Research topic to investigate
-        max_web_research_loops: Number of research iterations
-        llm_provider: Provider for the LLM (ollama, lmstudio, groq)
-        local_llm: Model name to use
-        search_api: Web search API to use
-        fetch_full_page: Include full page content in results
-        strip_thinking_tokens: Remove <think> tokens from model outputs
-        use_tool_calling: Use tool calling instead of JSON mode
-        ollama_base_url: Ollama base URL
-        lmstudio_base_url: LMStudio base URL
-        groq_base_url: Groq Open Source Models API base URL
-        groq_api_key: API key for Groq Open Source Models
 
     Returns:
         { "summary_markdown": str }
